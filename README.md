@@ -2,6 +2,8 @@
 
 A colorful C# console toolbox for bootcamp learners. Simple static methods, one helper file, no packages.
 
+**Learning C#? Start with the [learner's handbook](docs/LEARNERS.md).** It teaches every feature separately, with setup steps, copy-and-paste examples, expected results and a complete student-scores app.
+
 - Modern tables, arrays and matrices, with emoji-aware alignment and long-cell limits
 - Color themes, inline color tags, badges, rainbow text and emoji aliases
 - Panels, headings, lists, steps, trees, key/value details and bar charts
@@ -39,7 +41,12 @@ int choice = ConsoleKit.Menu("What next?", "Practice", "Exit");
 
 ## Full documentation
 
-Read the **[complete feature guide](docs/GUIDE.md)** for every method, setting, enum, parameter default, example and terminal limitation. Start with its [first program](docs/GUIDE.md#first-program), or browse the [feature index](docs/GUIDE.md#feature-index).
+Choose the guide that matches what you need:
+
+- **[Learner's handbook](docs/LEARNERS.md):** 53 individual lessons covering every method and setting. Each lesson explains when to use it, shows an example and describes what happens. Includes all table styles, spinner styles, themes, emoji aliases, a complete practice app and common mistakes.
+- **[Technical reference](docs/GUIDE.md):** exact method signatures, parameter defaults, validation rules and terminal limitations.
+
+Start with [setting up your project](docs/LEARNERS.md#set-up-your-project-once), use the [feature finder](docs/LEARNERS.md#find-a-feature), or try the [complete student-scores project](docs/LEARNERS.md#practice-project-student-scores).
 
 ## Verify
 

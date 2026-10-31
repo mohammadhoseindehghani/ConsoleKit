@@ -2,6 +2,8 @@
 
 ConsoleKit is a single-file console toolbox designed for students learning arrays, loops and methods. Start with simple calls; the later examples introduce objects and asynchronous work. It has no external dependencies.
 
+**New to using the class? Read the [learner's handbook](LEARNERS.md) first.** It gives every public method and setting its own lesson, with a small example and expected result. This document provides the detailed technical reference.
+
 ## Feature index
 
 - [First program](#first-program)
