@@ -48,7 +48,9 @@ In `ConsoleKit.WriteLine("Hello", ConsoleColor.Green);`:
 - `ConsoleColor.Green` is your chosen color.
 - The semicolon ends the statement.
 
-Start with lessons 1–17 while learning arrays. Later lessons introduce input, menus, animations and settings. Each C# code block is an independent example you can try in `Program.cs` after setup. Examples with prompts need you to type an answer.
+Start with text, simple arrays and loops in [the beginner Program.cs](../ConsoleKit/Program.cs). Call `ConsoleKit.WriteLine` the same way you call `Console.WriteLine`; the file already provides the helper methods for you.
+
+In this handbook, start with lessons 1–14 and the numeric/string examples in lesson 16. Custom table rows, objects, asynchronous work and cancellation can wait until those topics are taught. Each C# code block is an independent example you can try in `Program.cs` after setup. Examples with prompts need you to type an answer.
 
 ## Find a feature
 
@@ -70,21 +72,29 @@ Start with lessons 1–17 while learning arrays. Later lessons introduce input, 
 | Build a complete app | [Practice project](#practice-project-student-scores) |
 | Fix an issue | [Common questions](#common-questions) |
 
-### Run the commented cookbook
+### Run the beginner examples
 
-The repository's [Program.cs](../ConsoleKit/Program.cs) demonstrates every ConsoleKit method and setting. Read its comments and copy the examples you need. The tour covers text, layout, both array formats, tables, lists, charts, markup, emoji, themes, files, animations, measurement and input.
+The repository's [Program.cs](../ConsoleKit/Program.cs) is written for learners who know variables, arrays, loops and `if`. Read from top to bottom, then change some values and run it again. You do not need to define a class or your own methods to use these examples.
 
 From the repository root:
 
 ```sh
-# Visual examples, followed by live input exercises in an interactive terminal:
 dotnet run --project ConsoleKit
+```
+
+It prints both array formats, colors, messages, simple tables, lists and progress. Change `bool tryInput = false;` to `true` to try reading your name and age and running a repeating menu.
+
+### Complete tour for later lessons
+
+[AdvancedDemo/Program.cs](../examples/AdvancedDemo/Program.cs) covers every public feature. It includes topics such as methods, objects, asynchronous work and custom input readers. Use it after those topics have been taught.
+
+```sh
 # Visual examples only; no input exercises:
-dotnet run --project ConsoleKit -- --demo
+dotnet run --project examples/AdvancedDemo -- --demo
 # The complete tour, with supplied answers for every input example:
-dotnet run --project ConsoleKit -- --all
+dotnet run --project examples/AdvancedDemo -- --all
 # Explain the available run options:
-dotnet run --project ConsoleKit -- --help
+dotnet run --project examples/AdvancedDemo -- --help
 ```
 
 In `--all` mode, the demo prints the supplied answers beside each prompt and restores the original input stream afterward. It uses its own temporary sample file and removes it when finished. The live input exercise asks before demonstrating screen clearing, so you can keep the tour output visible. When streams are redirected, colors and in-place animations are disabled automatically; examples still print their results.
@@ -1170,7 +1180,7 @@ Exact shades depend on the terminal palette.
 
 ## Practice project: student scores
 
-This complete `Program.cs` combines arrays, loops, a menu, input and a table. Keep `ConsoleKit.cs` beside it. No student class is needed.
+This complete `Program.cs` uses variables, simple arrays, loops and `if`. Keep `ConsoleKit.cs` beside it. It displays each student's name and score using ordinary output calls.
 
 ```csharp
 ConsoleKit.ApplyTheme(ConsoleTheme.Ocean);
@@ -1185,13 +1195,19 @@ while (running)
         "Show scores", "Change a score", "Show chart", "Exit");
     if (choice == 1)
     {
-        object?[][] rows = new object?[names.Length][];
         for (int i = 0; i < names.Length; i++)
         {
-            string status = scores[i] >= 10 ? "Passed" : "Needs practice";
-            rows[i] = new object?[] { names[i], scores[i], status };
+            ConsoleKit.Write(names[i] + ": ");
+            ConsoleKit.WriteLine(scores[i]);
+            if (scores[i] >= 10)
+            {
+                ConsoleKit.Success("Passed");
+            }
+            else
+            {
+                ConsoleKit.Warning("Needs practice");
+            }
         }
-        ConsoleKit.Table(["Name", "Score", "Status"], rows);
     }
     else if (choice == 2)
     {
@@ -1221,7 +1237,7 @@ ConsoleKit.Success("Goodbye!");
 4. Enter `3` to compare scores as bars.
 5. Enter `4` to exit.
 
-`names[i]` and `scores[i]` refer to the same student. Subtracting 1 converts a menu number to an array index. The table uses a jagged array: an array whose elements are row arrays.
+`names[i]` and `scores[i]` refer to the same student. Subtracting 1 converts a menu number to an array index. The `if` statement checks whether the score is at least 10. The chart copies the integer scores into a numeric `double[]` because that is what `BarChart` accepts.
 
 ## Common questions
 

@@ -52,12 +52,14 @@ Run the repository's examples:
 ```sh
 dotnet run --project ConsoleKit
 # All visual examples, without input prompts:
-dotnet run --project ConsoleKit -- --demo
+dotnet run --project examples/AdvancedDemo -- --demo
 # Every example, including input helpers with supplied answers:
-dotnet run --project ConsoleKit -- --all
+dotnet run --project examples/AdvancedDemo -- --all
 ```
 
-`Program.cs` contains a commented example of every public method and setting. It shows all table styles, themes, spinner styles, emoji aliases and console colors. The default run includes live input exercises when input and output are interactive. `--demo` runs the visual tour only. `--all` runs the visual tour plus input examples using an internal set of sample answers, and restores the original input stream afterward. It leaves the example output on screen; clearing is offered only in the live input exercise. The helper's input methods themselves can also read piped input.
+`ConsoleKit/Program.cs` is a beginner example using direct calls, variables, arrays, loops and conditions. Set `tryInput` to true in that file to try its input exercises.
+
+`examples/AdvancedDemo/Program.cs` contains the complete tour for later lessons: every public method and setting, all table styles, themes, spinner styles, emoji aliases and console colors. Its normal run includes live input exercises when input and output are interactive. `--demo` runs the visual tour only. `--all` runs the visual tour plus input examples using supplied answers, restoring the original stream afterward. Clearing is offered only in the live exercise. The helper's input methods themselves can also read piped input.
 
 ## Settings and themes
 
@@ -765,7 +767,7 @@ This is for measuring a single line of plain text, not markup, tabs or ANSI esca
 
 ## Complete practice project
 
-This example only requires arrays, loops and methods. Copy it into your own `Program.cs` alongside `ConsoleKit.cs`. It prints arrays, a custom table, a chart and a repeatable menu.
+This later example introduces a custom method and mixed-type table rows. Start with the [beginner practice project](LEARNERS.md#practice-project-student-scores) while learning variables, arrays, loops and `if`. When ready, copy this version into your own `Program.cs` alongside `ConsoleKit.cs` to explore custom tables and methods.
 
 ```csharp
 ConsoleKit.ApplyTheme(ConsoleTheme.Ocean);

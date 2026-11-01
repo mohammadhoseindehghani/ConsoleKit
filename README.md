@@ -19,12 +19,14 @@ The repository uses the .NET 10 SDK:
 dotnet run --project ConsoleKit
 ```
 
-`Program.cs` is a commented cookbook covering every public method, setting and enum choice. The normal run shows all visual examples, then offers live input exercises in an interactive terminal.
+`Program.cs` is the beginner example. It uses variables, ordinary arrays, `for`, `while` and `if`, with comments explaining each step. To try its input and menu exercises, change `bool tryInput = false;` to `true`.
+
+For later lessons, the separate advanced demo covers every public method, setting and enum choice:
 
 ```sh
-dotnet run --project ConsoleKit -- --demo
+dotnet run --project examples/AdvancedDemo -- --demo
 # Run every example, including input helpers with supplied answers:
-dotnet run --project ConsoleKit -- --all
+dotnet run --project examples/AdvancedDemo -- --all
 ```
 
 ## Use in your project
