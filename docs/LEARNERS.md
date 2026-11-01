@@ -48,7 +48,7 @@ In `ConsoleKit.WriteLine("Hello", ConsoleColor.Green);`:
 - `ConsoleColor.Green` is your chosen color.
 - The semicolon ends the statement.
 
-Start with lessons 1–16 while learning arrays. Later lessons introduce input, menus, animations and settings. Each C# code block is an independent example you can try in `Program.cs` after setup. Examples with prompts need you to type an answer.
+Start with lessons 1–17 while learning arrays. Later lessons introduce input, menus, animations and settings. Each C# code block is an independent example you can try in `Program.cs` after setup. Examples with prompts need you to type an answer.
 
 ## Find a feature
 
@@ -57,18 +57,37 @@ Start with lessons 1–16 while learning arrays. Later lessons introduce input, 
 | Print colored text | [1. WriteLine](#1-writeline), [2. Write](#2-write) |
 | Print status messages | [3. Success](#3-success), [4. Error](#4-error), [5. Warning](#5-warning), [6. Info](#6-info) |
 | Add headings and layout | [7. Title](#7-title), [8. Rule](#8-rule), [9. Center](#9-center), [10. Panel](#10-panel), [11. Badge](#11-badge), [12. KeyValue](#12-keyvalue) |
-| Display arrays and tables | [13. PrintArray](#13-printarray), [14. Table](#14-table), [15. WriteTable](#15-writetable), [16. PrintMatrix](#16-printmatrix) |
-| Display lists and workflows | [17. Bullets](#17-bullets), [18. NumberedList](#18-numberedlist), [19. Steps](#19-steps), [20. Tree](#20-tree) |
-| Compare numbers visually | [21. BarChart](#21-barchart) |
-| Read user input | [22. ReadText](#22-readtext), [23. ReadInt](#23-readint), [24. ReadDouble](#24-readdouble), [25. Confirm](#25-confirm) |
-| Show choices | [26. Menu](#26-menu), [27. Select](#27-select), [28. MultiSelect](#28-multiselect), [29. Pause](#29-pause) |
-| Color parts of a line | [30. MarkupLine](#30-markupline), [31. Markup](#31-markup), [32. EscapeMarkup](#32-escapemarkup) |
-| Use emoji and more colors | [33. Emoji](#33-emoji), [34. Emojify](#34-emojify), [35. Rainbow](#35-rainbow), [36. ApplyTheme](#36-applytheme) |
-| Show loading and animation | [37. Progress](#37-progress), [38. Loading](#38-loading), [39. LoadingAsync](#39-loadingasync), [40. Wait](#40-wait), [41. Typewrite](#41-typewrite) |
-| Use files and screen utilities | [42. PrintFile](#42-printfile), [43. Clear](#43-clear), [44. DisplayWidth](#44-displaywidth) |
-| Change settings | [45–53. Settings](#settings) |
+| Display arrays and tables | [13. PrintArray](#13-printarray), [14. PrintArrayInline](#14-printarrayinline), [15. Table](#15-table), [16. WriteTable](#16-writetable), [17. PrintMatrix](#17-printmatrix) |
+| Display lists and workflows | [18. Bullets](#18-bullets), [19. NumberedList](#19-numberedlist), [20. Steps](#20-steps), [21. Tree](#21-tree) |
+| Compare numbers visually | [22. BarChart](#22-barchart) |
+| Read user input | [23. ReadText](#23-readtext), [24. ReadInt](#24-readint), [25. ReadDouble](#25-readdouble), [26. Confirm](#26-confirm) |
+| Show choices | [27. Menu](#27-menu), [28. Select](#28-select), [29. MultiSelect](#29-multiselect), [30. Pause](#30-pause) |
+| Color parts of a line | [31. MarkupLine](#31-markupline), [32. Markup](#32-markup), [33. EscapeMarkup](#33-escapemarkup) |
+| Use emoji and more colors | [34. Emoji](#34-emoji), [35. Emojify](#35-emojify), [36. Rainbow](#36-rainbow), [37. ApplyTheme](#37-applytheme) |
+| Show loading and animation | [38. Progress](#38-progress), [39. Loading](#39-loading), [40. LoadingAsync](#40-loadingasync), [41. Wait](#41-wait), [42. Typewrite](#42-typewrite) |
+| Use files and screen utilities | [43. PrintFile](#43-printfile), [44. Clear](#44-clear), [45. DisplayWidth](#45-displaywidth) |
+| Change settings | [46–54. Settings](#settings) |
 | Build a complete app | [Practice project](#practice-project-student-scores) |
 | Fix an issue | [Common questions](#common-questions) |
+
+### Run the commented cookbook
+
+The repository's [Program.cs](../ConsoleKit/Program.cs) demonstrates every ConsoleKit method and setting. Read its comments and copy the examples you need. The tour covers text, layout, both array formats, tables, lists, charts, markup, emoji, themes, files, animations, measurement and input.
+
+From the repository root:
+
+```sh
+# Visual examples, followed by live input exercises in an interactive terminal:
+dotnet run --project ConsoleKit
+# Visual examples only; no input exercises:
+dotnet run --project ConsoleKit -- --demo
+# The complete tour, with supplied answers for every input example:
+dotnet run --project ConsoleKit -- --all
+# Explain the available run options:
+dotnet run --project ConsoleKit -- --help
+```
+
+In `--all` mode, the demo prints the supplied answers beside each prompt and restores the original input stream afterward. It uses its own temporary sample file and removes it when finished. The live input exercise asks before demonstrating screen clearing, so you can keep the tour output visible. When streams are redirected, colors and in-place animations are disabled automatically; examples still print their results.
 
 ## 1. WriteLine
 
@@ -249,7 +268,94 @@ ConsoleKit.PrintArray(names);
 
 Empty arrays display `(no data)`. Null values display `(null)`.
 
-## 14. Table
+## 14. PrintArrayInline
+
+**Use it to:** print the whole array together on one line, like the arrays you write in code.
+
+```csharp
+int[] numbers = { 1, 2, 3, 4 };
+ConsoleKit.PrintArrayInline(numbers);
+```
+
+**What you see:**
+
+```text
+[1, 2, 3, 4]
+```
+
+Strings automatically get double quotes:
+
+```csharp
+string[] names = { "ali", "sina", "kamran" };
+ConsoleKit.PrintArrayInline(names);
+```
+
+```text
+["ali", "sina", "kamran"]
+```
+
+Choose a color by passing it as the second argument:
+
+```csharp
+int[] numbers = { 1, 2, 3, 4 };
+ConsoleKit.PrintArrayInline(numbers, ConsoleColor.Magenta);
+```
+
+Without a color argument, the method uses the current accent color. It adds a newline automatically. It does not print a heading or indexes.
+
+### Choose the array format you need
+
+```csharp
+int[] numbers = { 1, 2, 3 };
+ConsoleKit.PrintArray(numbers, "Numbers with indexes");
+ConsoleKit.PrintArrayInline(numbers);
+```
+
+```text
+  Numbers with indexes
+
+[0] 1
+[1] 2
+[2] 3
+[1, 2, 3]
+```
+
+Use `PrintArray` to study indexes, and `PrintArrayInline` to see the values together.
+
+### Empty arrays, lists and mixed values
+
+```csharp
+ConsoleKit.PrintArrayInline(Array.Empty<int>());
+ConsoleKit.PrintArrayInline(new List<string> { "ali", "sina" });
+ConsoleKit.PrintArrayInline(new object?[] { 1, "Ali", true, null });
+ConsoleKit.PrintArrayInline(new[] { 'A', 'B' });
+```
+
+```text
+[]
+["ali", "sina"]
+[1, "Ali", true, null]
+["A", "B"]
+```
+
+An empty array prints `[]`. Boolean values print as `true` or `false`; a missing value prints as `null`. Lists work just like arrays.
+
+### Strings containing quotes or newlines
+
+```csharp
+string[] messages = { "He said \"Hi\"", "Line 1\nLine 2", "C:\\notes" };
+ConsoleKit.PrintArrayInline(messages);
+```
+
+```text
+["He said \"Hi\"", "Line 1\nLine 2", "C:\\notes"]
+```
+
+Backslashes make special characters visible, so the array stays on one logical line. The original strings are unchanged. Numeric values always use a decimal dot, keeping commas clear as item separators. A very long line can still wrap at the edge of a small terminal.
+
+Use this for flat arrays. It does not expand nested arrays or turn object properties into columns; use `PrintMatrix` or `WriteTable` for those jobs. The array itself cannot be null.
+
+## 15. Table
 
 **Use it to:** make a table by supplying the headings and rows yourself.
 
@@ -277,7 +383,7 @@ ConsoleKit.Table(headings, firstRow, secondRow);
 
 An `object?[]` can hold mixed values such as strings and integers. The question mark also allows null values.
 
-## 15. WriteTable
+## 16. WriteTable
 
 **Use it to:** turn an existing array or list into a table automatically.
 
@@ -315,7 +421,7 @@ ConsoleKit.WriteTable(scores, ConsoleColor.Yellow, ConsoleColor.White);
 
 Public fields and inherited properties are supported too. An explicit row color replaces automatic numeric and status colors. Empty input displays `(no data)`.
 
-## 16. PrintMatrix
+## 17. PrintMatrix
 
 **Use it to:** print a two-dimensional array.
 
@@ -330,7 +436,7 @@ ConsoleKit.PrintMatrix(grid);
 
 **What you see:** two rows and three columns, with headings `[0]`, `[1]` and `[2]`. The comma in `int[,]` means this array has two dimensions.
 
-## 17. Bullets
+## 18. Bullets
 
 **Use it to:** display an unordered list.
 
@@ -345,7 +451,7 @@ string[] topics = { "Arrays", "Loops", "Methods" };
 ConsoleKit.Bullets(topics);
 ```
 
-## 18. NumberedList
+## 19. NumberedList
 
 **Use it to:** display a list with numbers.
 
@@ -363,7 +469,7 @@ ConsoleKit.NumberedList("Read the task", "Write your code", "Test your answer");
 
 This displays a list. Use `Menu` when the user should choose an item.
 
-## 19. Steps
+## 20. Steps
 
 **Use it to:** show the current step in a workflow.
 
@@ -373,7 +479,7 @@ ConsoleKit.Steps(2, "Read data", "Process data", "Save results");
 
 **What you see:** step 1 is complete, step 2 is active, and step 3 is waiting. The first number is the active step, starting at **1**. It must identify one of the supplied steps. Printing the steps does not run their work.
 
-## 20. Tree
+## 21. Tree
 
 **Use it to:** display a root with connected items beneath it.
 
@@ -392,7 +498,7 @@ ConsoleKit.Tree("MyProject", "Program.cs", "ConsoleKit.cs", "notes.txt");
 
 The first string is the root; the rest are children. This shows one level of items. It does not search your computer or read folders.
 
-## 21. BarChart
+## 22. BarChart
 
 **Use it to:** compare numbers visually.
 
@@ -410,7 +516,7 @@ ConsoleKit.BarChart(["Ali", "Sara"], [18, 20], 15);
 
 The last number is the maximum bar width, here 15 cells. Exact values print beside the bars.
 
-## 22. ReadText
+## 23. ReadText
 
 **Use it to:** ask for a string and store the answer.
 
@@ -428,7 +534,7 @@ ConsoleKit.WriteLine($"Note: {note}");
 
 Spaces at the beginning and end are removed.
 
-## 23. ReadInt
+## 24. ReadInt
 
 **Use it to:** read a whole number safely.
 
@@ -446,7 +552,7 @@ int number = ConsoleKit.ReadInt("Enter a whole number:");
 ConsoleKit.WriteLine(number);
 ```
 
-## 24. ReadDouble
+## 25. ReadDouble
 
 **Use it to:** read a number that may have a decimal part.
 
@@ -457,7 +563,7 @@ ConsoleKit.WriteLine($"Your score is {score}.");
 
 **Try:** enter `18.5` if your system uses a dot as the decimal separator. Some system languages use a comma instead. Answers outside 0–20 prompt again.
 
-## 25. Confirm
+## 26. Confirm
 
 **Use it to:** ask a yes/no question.
 
@@ -471,7 +577,7 @@ else
 
 **Try:** enter `y` or `yes` to get `true`; enter `n` or `no` to get `false`. Capital letters work too. Other answers prompt again.
 
-## 26. Menu
+## 27. Menu
 
 **Use it to:** let the user choose a numbered option.
 
@@ -489,7 +595,7 @@ else
 
 Menu numbers start at **1**; array indexes start at **0**. Your code decides what each returned number does. An option named `Exit` does not close the app automatically. See the practice project for a repeating menu.
 
-## 27. Select
+## 28. Select
 
 **Use it to:** choose an option and receive its text directly.
 
@@ -500,7 +606,7 @@ ConsoleKit.WriteLine($"You chose {language}.");
 
 **Try:** type `1`. The method returns the string `C#`. `Menu` returns a number; `Select` returns the text. Both use typed numbers and Enter.
 
-## 28. MultiSelect
+## 29. MultiSelect
 
 **Use it to:** choose several options at once.
 
@@ -515,7 +621,7 @@ foreach (int number in choices)
 
 **Try:** enter `1,3`. You should see Arrays and Methods. Returned numbers start at 1, so subtract 1 for an array index. Duplicates are removed. Empty input returns an empty array. Invalid selections prompt again.
 
-## 29. Pause
+## 30. Pause
 
 **Use it to:** wait for Enter before continuing.
 
@@ -531,7 +637,7 @@ You can change the prompt:
 ConsoleKit.Pause("Press Enter to return to the menu...");
 ```
 
-## 30. MarkupLine
+## 31. MarkupLine
 
 **Use it to:** color different parts of one line using small tags.
 
@@ -550,7 +656,7 @@ ConsoleKit.MarkupLine("[green]Saved [yellow]3 files[/] successfully.[/]");
 
 Here `3 files` is yellow and the surrounding sentence is green. Every opening tag needs a closing tag. Unsupported or unclosed tags cause a `FormatException` before that call prints anything.
 
-## 31. Markup
+## 32. Markup
 
 **Use it to:** print colored parts without moving to a new line.
 
@@ -561,7 +667,7 @@ ConsoleKit.MarkupLine("[green]20[/] / 20");
 
 **What you see:** `Score: 20 / 20` on one line. Finish with `MarkupLine` or `WriteLine` for a newline.
 
-## 32. EscapeMarkup
+## 33. EscapeMarkup
 
 **Use it to:** display brackets literally when inserting a value into markup.
 
@@ -579,7 +685,7 @@ ConsoleKit.MarkupLine("Write [[green]] to open a color tag.");
 
 `EscapeMarkup` returns text; it does not print it. For fully literal text without tag or alias interpretation, use `WriteLine`.
 
-## 33. Emoji
+## 34. Emoji
 
 **Use it to:** get an emoji by a simple name.
 
@@ -606,7 +712,7 @@ ConsoleKit.WriteLine("🚀 My app is starting!");
 
 Emoji appearance and color depend on your terminal and font.
 
-## 34. Emojify
+## 35. Emojify
 
 **Use it to:** replace several emoji names inside a string.
 
@@ -651,7 +757,7 @@ ConsoleKit.WriteLine(ConsoleKit.Emojify(
 
 `WriteLine(":rocket:")` prints the name literally. Use `Emojify`, `Emoji` or `MarkupLine` for alias replacement.
 
-## 35. Rainbow
+## 36. Rainbow
 
 **Use it to:** print playful text in a repeating color pattern.
 
@@ -661,7 +767,7 @@ ConsoleKit.Rainbow("Welcome to the bootcamp!");
 
 **What you see:** characters in red, yellow, green, cyan, blue and magenta. The method adds a newline automatically.
 
-## 36. ApplyTheme
+## 37. ApplyTheme
 
 **Use it to:** change the accent color in one call.
 
@@ -689,7 +795,7 @@ ConsoleKit.ApplyTheme(ConsoleTheme.Ocean); // Restore the default accent
 
 Explicit colors passed to methods are kept. `Mono` changes the accent to white; `UseColors = false` disables all coloring. Applying any theme resets `MutedColor` to DarkGray.
 
-## 37. Progress
+## 38. Progress
 
 **Use it to:** show how much work your loop has completed.
 
@@ -713,7 +819,7 @@ ConsoleKit.Progress(10, 10, "Completed", 15);
 
 The first call is 50%; the second is 100% and ends the line. Keep label and width unchanged during a loop. Total and width must be positive, and completed items must be between zero and total. Check for an empty array before starting. `Thread.Sleep(300)` is a 300-millisecond demonstration pause.
 
-## 38. Loading
+## 39. Loading
 
 **Use it to:** run work while a spinner tells the user to wait.
 
@@ -733,7 +839,7 @@ ConsoleKit.WriteLine($"Total: {total}");
 
 The `() => { ... }` part passes a block of work as the second argument. ConsoleKit runs that block and waits for it to finish. Put real calculation or file reading inside it. Print results **after** the loading call to avoid overlapping the spinner. Errors still reach your program.
 
-## 39. LoadingAsync
+## 40. LoadingAsync
 
 **Use it to:** show a spinner while awaiting asynchronous work. Return to this lesson when you learn `Task`, `async` and `await`.
 
@@ -766,7 +872,7 @@ catch (OperationCanceledException)
 
 The task cancels after about one second. Pass the token to both the helper and the work. The helper always waits for the work to end; it cannot force work that ignores cancellation to stop.
 
-## 40. Wait
+## 41. Wait
 
 **Use it to:** display a spinner during a fixed delay.
 
@@ -783,7 +889,7 @@ ConsoleKit.Wait();
 
 Use this for a demonstration pause. Use `Loading` for actual work.
 
-## 41. Typewrite
+## 42. Typewrite
 
 **Use it to:** reveal text gradually, like typing.
 
@@ -794,7 +900,7 @@ ConsoleKit.Typewrite("🚀 Let's build something.", 30);
 
 **What you see:** text appearing a little at a time. The number is the delay per text element in milliseconds; smaller is faster. The method adds a newline. With animations disabled or redirected streams, it prints immediately.
 
-## 42. PrintFile
+## 43. PrintFile
 
 **Use it to:** display a text file's contents.
 
@@ -820,7 +926,7 @@ catch (IOException exception)
 
 `PrintFile` prints literal contents without interpreting color tags or adding a newline. It reads the whole file into memory.
 
-## 43. Clear
+## 44. Clear
 
 **Use it to:** clear the terminal before displaying a new page.
 
@@ -833,7 +939,7 @@ ConsoleKit.Title("New page");
 
 **What you see:** after Enter, the old page disappears and the new title appears. Clearing does nothing for redirected output. Hosts without screen-clearing support may report an error.
 
-## 44. DisplayWidth
+## 45. DisplayWidth
 
 **Use it to:** measure approximately how many terminal cells text needs. This helps when making your own aligned output later.
 
@@ -852,7 +958,7 @@ ConsoleKit.WriteLine($"Combined letter: {combined}");
 
 Settings affect future calls. Put them near the start of `Program.cs`. Each example below changes one setting and demonstrates its result.
 
-## 45. UseColors
+## 46. UseColors
 
 **Use it to:** turn coloring on or off. Default: `true`.
 
@@ -865,7 +971,7 @@ ConsoleKit.WriteLine("Red text", ConsoleColor.Red);
 
 **What you see:** the first line keeps the terminal's normal color; the second is red. Colors are always disabled when output goes to a file or pipe.
 
-## 46. UseUnicode
+## 47. UseUnicode
 
 **Use it to:** use simple ASCII symbols in a terminal without Unicode support. Default: `true`.
 
@@ -879,7 +985,7 @@ ConsoleKit.UseUnicode = true;
 
 **What you see:** `+`, `-` and `|` panel borders, hyphen bullets and `[GO]` instead of a rocket. This changes generated symbols; it does not rewrite literal Unicode in your own strings.
 
-## 47. UseEmoji
+## 48. UseEmoji
 
 **Use it to:** choose emoji icons or text fallbacks. Default: `true`.
 
@@ -893,7 +999,7 @@ ConsoleKit.Success("Saved.");
 
 **What you see:** `[OK] Saved.` and `[GO] Start`, then a success message with an emoji. Literal emoji strings remain unchanged.
 
-## 48. UseAnimations
+## 49. UseAnimations
 
 **Use it to:** keep output still. Default: `true`.
 
@@ -906,7 +1012,7 @@ ConsoleKit.UseAnimations = true;
 
 **What you see:** immediate text and ordinary loading messages. Actual work and timed delays still happen. Animations also require interactive input and output.
 
-## 49. TableStyle
+## 50. TableStyle
 
 **Use it to:** choose the appearance of tables and matrices. Default: `TableStyle.Modern`.
 
@@ -952,7 +1058,7 @@ ConsoleKit.TableStyle = TableStyle.Modern;
 
 `TableStyle` is an enum, meaning a named set of choices: Modern, Rounded, Minimal and Ascii.
 
-## 50. MaxColumnWidth
+## 51. MaxColumnWidth
 
 **Use it to:** keep long table values from making huge tables. Default: 32 cells. Minimum: 4.
 
@@ -964,7 +1070,7 @@ ConsoleKit.MaxColumnWidth = 32;
 
 **What you see:** the long value shortened with an ellipsis, or three dots in ASCII mode. Its original value remains unchanged. Tables also try to fit the terminal width, so columns may be narrower than the configured limit.
 
-## 51. AccentColor
+## 52. AccentColor
 
 **Use it to:** choose your own main UI color. Default: Cyan.
 
@@ -977,7 +1083,7 @@ ConsoleKit.AccentColor = ConsoleColor.Cyan;
 
 **What you see:** magenta information text and chart bars. Menu numbers, prompts, progress and numeric table cells also use the accent. Explicitly supplied colors are kept.
 
-## 52. MutedColor
+## 53. MutedColor
 
 **Use it to:** change supporting labels and borders. Default: DarkGray.
 
@@ -990,7 +1096,7 @@ ConsoleKit.MutedColor = ConsoleColor.DarkGray;
 
 **What you see:** lighter supporting labels and tree connectors. Try Gray when DarkGray is difficult to read on your terminal background.
 
-## 53. SpinnerStyle
+## 54. SpinnerStyle
 
 **Use it to:** choose a loading animation. Default: `SpinnerStyle.Dots`.
 
@@ -1172,4 +1278,4 @@ Width calculation handles common emoji, combined letters and wide text, but font
 
 ### Where are the exact defaults and error rules?
 
-Read the [technical reference](GUIDE.md). All 44 public methods, 9 settings and 3 enum types have usage examples in this handbook.
+Read the [technical reference](GUIDE.md). All 45 public methods, 9 settings and 3 enum types have usage examples in this handbook.

@@ -30,6 +30,38 @@ try
         Contains("│  Value  │"); Contains("│    200  │");
         ConsoleKit.WriteTable(Array.Empty<int>()); Contains("(no data)");
     });
+    Check("inline numeric, string and empty arrays", () =>
+    {
+        ConsoleKit.PrintArrayInline(new[] { 1, 2, 3, 4 });
+        Assert(output.ToString() == "[1, 2, 3, 4]" + Environment.NewLine, "Numbers should print on exactly one bracketed line");
+        output.GetStringBuilder().Clear();
+        ConsoleKit.PrintArrayInline(new[] { "ali", "sina", "kamran" });
+        Assert(output.ToString() == "[\"ali\", \"sina\", \"kamran\"]" + Environment.NewLine, "Strings should be quoted");
+        ConsoleKit.PrintArrayInline(Array.Empty<int>());
+        Contains("[]");
+        ConsoleKit.PrintArrayInline(new List<int> { 10, 20 });
+        Contains("[10, 20]");
+        Throws<ArgumentNullException>(() => ConsoleKit.PrintArrayInline(null!));
+    });
+    Check("inline quoting, nulls, booleans and culture", () =>
+    {
+        ConsoleKit.PrintArrayInline(new object?[] { 1, "Ali", true, false, null, 'A' });
+        Contains("[1, \"Ali\", true, false, null, \"A\"]");
+        output.GetStringBuilder().Clear();
+        string[] values = { "He said \"Hi\"", "C:\\notes", "one\ntwo\r\t\u001b", "\U0001f680" };
+        ConsoleKit.PrintArrayInline(values);
+        Contains("[\"He said \\\"Hi\\\"\", \"C:\\\\notes\", \"one\\ntwo\\r\\t\\u001b\", \"\U0001f680\"]");
+        Assert(output.ToString().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).Length == 1, "Control characters must not split an inline array across lines");
+        Assert(values[0] == "He said \"Hi\"", "Formatting must not change the array");
+        CultureInfo originalCulture = CultureInfo.CurrentCulture;
+        try
+        {
+            CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("fr-FR");
+            ConsoleKit.PrintArrayInline(new[] { 1.5, 2.75 });
+            Contains("[1.5, 2.75]");
+        }
+        finally { CultureInfo.CurrentCulture = originalCulture; }
+    });
     Check("inheritance, fields, indexers and throwing getters", () =>
     {
         ConsoleKit.WriteTable(new[] { new Student() });

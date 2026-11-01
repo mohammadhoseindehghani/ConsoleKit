@@ -119,6 +119,37 @@ public static class ConsoleKit
         if (index == 0) WriteLine("(no data)");
     }
 
+    /// <summary>Print a flat array on one line: [1, 2, 3] or ["Ali", "Sara"].</summary>
+    public static void PrintArrayInline(IEnumerable items, ConsoleColor? color = null)
+    {
+        ArgumentNullException.ThrowIfNull(items);
+        string text = "[" + string.Join(", ", items.Cast<object?>().Select(FormatInlineItem)) + "]";
+        WriteLine(text, color ?? AccentColor);
+    }
+
+    private static string FormatInlineItem(object? item) => item switch
+    {
+        null => "null",
+        string text => QuoteInline(text),
+        char character => QuoteInline(character.ToString()),
+        bool boolean => boolean ? "true" : "false",
+        IFormattable number => number.ToString(null, CultureInfo.InvariantCulture) ?? "null",
+        _ => QuoteInline(item.ToString() ?? "")
+    };
+
+    private static string QuoteInline(string text)
+    {
+        var result = new StringBuilder("\"");
+        foreach (char character in text)
+            result.Append(character switch
+            {
+                '"' => "\\\"", '\\' => "\\\\", '\n' => "\\n", '\r' => "\\r", '\t' => "\\t",
+                _ when char.IsControl(character) => "\\u" + ((int)character).ToString("x4"),
+                _ => character.ToString()
+            });
+        return result.Append('"').ToString();
+    }
+
     /// <summary>Print numbers, strings, or objects. Public properties and fields become columns.</summary>
     public static void WriteTable(IEnumerable items, ConsoleColor? headerColor = null, ConsoleColor? rowColor = null)
     {

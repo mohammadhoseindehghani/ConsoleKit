@@ -14,6 +14,7 @@ ConsoleKit is a single-file console toolbox designed for students learning array
 - [Titles, rules and centered text](#titles-rules-and-centered-text)
 - [Panels, badges and details](#panels-badges-and-details)
 - [Arrays, matrices and tables](#arrays-matrices-and-tables)
+- [Inline array output](#printarrayinline)
 - [Lists, steps and trees](#lists-steps-and-trees)
 - [Bar charts](#bar-charts)
 - [Input and menus](#input-and-menus)
@@ -38,6 +39,7 @@ ConsoleKit.Success("Ready to practice.");
 
 int[] scores = { 12, 18, 20 };
 ConsoleKit.PrintArray(scores, "My scores");
+ConsoleKit.PrintArrayInline(scores); // [12, 18, 20]
 ConsoleKit.Table(["Name", "Score"], ["Ali", 18], ["Sara", 20]);
 
 int choice = ConsoleKit.Menu("Next step", "Practice arrays", "Exit");
@@ -49,13 +51,13 @@ Run the repository's examples:
 
 ```sh
 dotnet run --project ConsoleKit
-# Results screen, then exit:
+# All visual examples, without input prompts:
 dotnet run --project ConsoleKit -- --demo
-# Every noninteractive example, then exit:
+# Every example, including input helpers with supplied answers:
 dotnet run --project ConsoleKit -- --all
 ```
 
-Menus are skipped by the demo when input or output is redirected. The helper's input methods themselves can read piped input.
+`Program.cs` contains a commented example of every public method and setting. It shows all table styles, themes, spinner styles, emoji aliases and console colors. The default run includes live input exercises when input and output are interactive. `--demo` runs the visual tour only. `--all` runs the visual tour plus input examples using an internal set of sample answers, and restores the original input stream afterward. It leaves the example output on screen; clearing is offered only in the live input exercise. The helper's input methods themselves can also read piped input.
 
 ## Settings and themes
 
@@ -332,6 +334,44 @@ ConsoleKit.PrintArray(new[] { "Apple", "Banana" });
 ```
 
 Null items appear as `(null)`. An empty collection prints `(no data)` after the title. The collection itself cannot be null.
+
+### PrintArrayInline
+
+`PrintArrayInline(IEnumerable items, ConsoleColor? color = null)` prints a flat collection on one line, with brackets and comma-space separators. It ends the line automatically. It uses `AccentColor` unless you pass a color.
+
+```csharp
+int[] numbers = { 1, 2, 3, 4 };
+string[] names = { "ali", "sina", "kamran" };
+ConsoleKit.PrintArrayInline(numbers);
+ConsoleKit.PrintArrayInline(names);
+ConsoleKit.PrintArrayInline(numbers, ConsoleColor.Magenta);
+```
+
+```text
+[1, 2, 3, 4]
+["ali", "sina", "kamran"]
+[1, 2, 3, 4]
+```
+
+Compare the formats: `PrintArray(numbers)` prints indexes on separate lines, while `PrintArrayInline(numbers)` prints the values together without indexes or a title. Both formats remain available.
+
+```csharp
+ConsoleKit.PrintArrayInline(Array.Empty<int>()); // []
+ConsoleKit.PrintArrayInline(new object?[] { 1, "Ali", true, null });
+ConsoleKit.PrintArrayInline(new List<string> { "ali", "sina" });
+ConsoleKit.PrintArrayInline(new[] { "He said \"Hi\"", "Line 1\nLine 2" });
+```
+
+```text
+[]
+[1, "Ali", true, null]
+["ali", "sina"]
+["He said \"Hi\"", "Line 1\nLine 2"]
+```
+
+Strings and characters are double-quoted. Quotes, backslashes and control characters are escaped, so a string containing a newline still occupies one output line. Booleans use `true`/`false`; null uses `null`. Numeric formatting uses invariant culture, so a decimal dot cannot be confused with the comma between items. Other formattable values use their invariant string form, and other objects use a quoted `ToString()` value.
+
+The collection itself cannot be null. Formatting does not change the collection. This is a flat, human-readable display rather than a general JSON serializer: nested arrays and object properties are not expanded. Long arrays can wrap naturally at the terminal edge.
 
 ### Table
 
@@ -786,7 +826,7 @@ All methods belong to `ConsoleKit`; all are static. The sections above provide e
 | Emoji | `Emoji`, `Emojify` |
 | Theme | `ApplyTheme` |
 | Structure | `Title`, `Rule`, `Center`, `Panel`, `Badge`, `KeyValue` |
-| Data | `PrintArray`, `Table`, `WriteTable`, `PrintMatrix`, `BarChart` |
+| Data | `PrintArray`, `PrintArrayInline`, `Table`, `WriteTable`, `PrintMatrix`, `BarChart` |
 | Lists | `Bullets`, `NumberedList`, `Steps`, `Tree` |
 | Input | `ReadText`, `ReadInt`, `ReadDouble`, `Confirm`, `Menu`, `Select`, `MultiSelect`, `Pause` |
 | Animation | `Progress`, `Loading`, `LoadingAsync`, `Wait`, `Typewrite` |
